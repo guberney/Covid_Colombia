@@ -1,4 +1,4 @@
-COVID-19 Base datos de Colombia 
+## COVID-19 Base datos de Colombia 
 Reportes diarios (casos_covid_19_Colombia)
 La carpeta contiene los casos diarios reportados por el Instituto Nacional de Salud de Colombia
 
@@ -27,7 +27,7 @@ País.de.procedencia: Lugar de donde viene el contagio, cuando aparece Colombia 
 # Fuente de datos
 Instituto Nacional de Salud de Colombia INS.
 
-# Se crea el siguiente repositorio por?
+# ¿Por qué crear el repositorio?
 Tener actualizados las datos con archivos históricos.
 Tener un archivo para ser consultado de forma fácil en csv.
 Crear un nuevo archivo con los reportes de descartados y confirmados, no disponible en INS.
