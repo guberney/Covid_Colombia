@@ -14,7 +14,7 @@ Ciudad.de.ubicación: ciudad o municipio donde se reporta el caso
 
 Departamento: Departamento donde se reporta el caso.
 
-Atención: Lugar donde se atiende el caso (casa, fallecido, hospital, recuperado).
+Atención: Lugar donde se atiende el caso (casa, fallecido, hospital, recuperado). Actualizado el 28/03/2020 con los siguientes: En casa, Fallecido, hospital, Hospital UCI, Recuperado.
 
 Edad: edad de la persona, agrupada en grupos de a 9 años.
 
