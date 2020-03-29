@@ -6,6 +6,8 @@ La información oficial que reporta Colombia se encuentra en: https://www.ins.go
 # Recursos
 World Health Organization (WHO): https://www.who.int/
 
+Investigaciones sobre covid-19: https://www.who.int/emergencies/diseases/novel-coronavirus-2019/global-research-on-novel-coronavirus-2019-ncov
+
 Plataforma John Hopkins University, datos covid-19: https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
 
 WorldoMeters: https://www.worldometers.info/coronavirus/
