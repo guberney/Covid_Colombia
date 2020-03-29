@@ -16,5 +16,5 @@ China CDC (CCDC): http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm
 
 RTVE es: https://app.flourish.studio/visualisation/1620066/
 
-Página con información más allá de los datos básicos de la epidemia: https://www.bing.com/covid
+Página con información más allá de los datos básicos de la pandemia: https://www.bing.com/covid
 
