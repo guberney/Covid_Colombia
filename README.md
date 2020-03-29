@@ -13,3 +13,8 @@ WorldoMeters: https://www.worldometers.info/coronavirus/
 China CDC (CCDC): http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm
 
 1Point3Arces: https://coronavirus.1point3acres.com/en
+
+RTVE es: https://app.flourish.studio/visualisation/1620066/
+
+Página con información más allá de los datos básicos de la epidemia: https://www.bing.com/covid
+
