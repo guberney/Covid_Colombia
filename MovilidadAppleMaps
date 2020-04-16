@@ -1,0 +1,39 @@
+#Reports are published daily and reflect requests for directions in Apple Maps.
+#https://www.apple.com/covid19/mobility
+library(tidyverse)
+
+trackapple<-read.csv("/Users/guberney/Research/Covid/applemobilitytrends-2020-04-13.csv")
+str(trackapple)
+trackapple<-trackapple%>% rename(`País/Región` = `region`, `Transporte`=transportation_type)%>%
+  pivot_longer(-c(`País/Región`, Transporte, geo_type), names_to = "Fecha1", values_to = "Solicitudes")
+
+trackapple<-trackapple%>% separate(Fecha1, 
+                                   into = c("X", "Fecha"), 
+                                   sep = "(?<=[A-Za-z])(?=[0-9])")
+trackapple$Fecha<-ymd(trackapple$Fecha)  
+
+trackapple<-trackapple%>%mutate(Transporte = fct_recode(Transporte,
+                                                        Conduciendo="driving",
+                                                        Caminando="walking"))%>%
+  mutate(CambioPorcentual = ((Solicitudes-100)/100))
+
+trackapple1<-trackapple%>%filter(`País/Región`=='Colombia' | `País/Región`=='Argentina'  | `País/Región`=='Chile'  | `País/Región`=='Mexico' 
+                                 | `País/Región`=='Brazil'| `País/Región`=='Peru'| `País/Región`=='Ecuador'| `País/Región`=='United States')
+
+trackapple1%>%
+  # filter(`País/Región` == "Colombia")%>%
+  filter(Transporte=="Conduciendo")%>%
+  ggplot(aes(Fecha, CambioPorcentual, colour=`País/Región`)) +
+  geom_line(size = 1)+
+  labs(title= "Cambio de rutinas de ciudadanos en requerir direcciones en Apple Maps (Conduciendo),\n desde Enero 13 de 2020.",
+       subtitle = "Países de la región",x= "Fecha", y= "Porcentaje de solicitudes en Apple Maps", 
+       caption = "Fuente: https://www.apple.com/covid19/mobility\n Gráfico= @guberney")+
+  geom_vline(xintercept=as.numeric(as.Date("2020-03-25")),color="blue", linetype="dashed", size=2 )+
+  geom_hline(yintercept=0,color="black", linetype="solid", size=1)+
+  scale_y_continuous(labels=scales::percent)+
+  annotate ("text", label = "Aislamiento obligatorio\n Colombia", x = as.Date("2020-03-23"), y = 0.50, size = 6, colour = "blue")+
+  annotate ("text", label = "Línea base", x = as.Date("2020-04-11"), y = 0.05, size = 4, colour = "black")+
+  #  theme(plot.title = element_text(color="black", size=18, face="bold.italic"))+
+  scale_x_date(date_labels="%b %d",date_breaks  ="1 week")+
+  scale_colour_brewer(palette = "Set1")+
+  theme_clean()
