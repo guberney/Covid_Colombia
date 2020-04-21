@@ -1,0 +1,30 @@
+"""
+Created on Sat Apr 18 11:19:11 2020
+@author: Juan Diego Carvajalino Olave
+"""
+
+import pandas as pd
+import requests
+import datetime as dt
+import json
+
+# URL donde se encuetra el JSON del infograma del INS. 
+url1 = "https://atlas.jifo.co/api/connectors/a546b837-15be-45aa-aa86-de35a0cd2a66"
+url2 = "https://atlas.jifo.co/api/connectors/cc8df162-5f14-4eeb-95b4-009dd4069ac0"
+url = [url1]
+
+
+# Acá se guardan las hojas de cálculo
+for url in url:
+    Raw = requests.get(url).json()
+    Sheets = []
+    
+    # Nombre del archivo a guardar
+    fileName = Raw['fileName']+'_(version {})_'.format(Raw['version']) + dt.datetime.now().strftime('%d-%m-%Y')+'.xlsx'
+    NewFile = pd.DataFrame([Raw['version']],columns = ['version']).to_excel(fileName,sheet_name='version',index=False)
+    
+    # Se guarda toda la información en formato 'texto', por lo que no incluye las fórmulas que pueda tener el documento original
+    with pd.ExcelWriter(fileName,engine= 'openpyxl',mode='a') as writer:
+        for n,sheetName in enumerate(Raw['sheetNames']):
+            Sheets.append(pd.DataFrame(Raw['data'][n]))
+            Sheets[n].to_excel(writer, sheet_name=sheetName, index=False, header=False)
