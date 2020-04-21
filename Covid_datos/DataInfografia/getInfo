@@ -6,11 +6,10 @@ Created on Sat Apr 18 11:19:11 2020
 import pandas as pd
 import requests
 import datetime as dt
-import json
 
 # URL donde se encuetra el JSON del infograma del INS. 
-url1 = "https://atlas.jifo.co/api/connectors/a546b837-15be-45aa-aa86-de35a0cd2a66"
-url2 = "https://atlas.jifo.co/api/connectors/cc8df162-5f14-4eeb-95b4-009dd4069ac0"
+#Es posible encontrar otras URL que descarguen otras hojas de cálculo del infograma
+url1 = "https://atlas.jifo.co/api/connectors/e160e2f9-a7b9-4f01-879e-cc497cb279eb"
 url = [url1]
 
 
