@@ -4,6 +4,8 @@ Recursos para hacer análisis del Covid en Colombia, incluye datos oficiales y o
 La información oficial que reporta Colombia se encuentra en: https://www.ins.gov.co/Noticias/Paginas/Coronavirus.aspx La página presenta actualizaciones diarias, para acceder debe descargarse cada noche. Aquí estará la base de datos alojada en formato csv y con posibilidad para conectarla directamente con códigos de programación. Además, aquí se recogerán los reportes diarios guardados por fecha. 
 
 # Recursos
+Plataforma de datos abiertos de Colombia: https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data  
+
 World Health Organization (WHO): https://www.who.int/
 
 Investigaciones sobre covid-19: https://www.who.int/emergencies/diseases/novel-coronavirus-2019/global-research-on-novel-coronavirus-2019-ncov
