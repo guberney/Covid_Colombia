@@ -1,11 +1,11 @@
+###Reports are published daily and reflect requests for directions in Apple Maps and Google maps
+
 #Reports are published daily and reflect requests for directions in Apple Maps.
 #https://www.apple.com/covid19/mobility
-library(tidyverse)
-
-trackapple<-read.csv("/Users/guberney/Research/Covid/applemobilitytrends-2020-04-13.csv")
+trackapple<-read.csv("/Users/guberney/Research/Covid/applemobilitytrends-2020-05-12.csv")
 str(trackapple)
 trackapple<-trackapple%>% rename(`País/Región` = `region`, `Transporte`=transportation_type)%>%
-  pivot_longer(-c(`País/Región`, Transporte, geo_type), names_to = "Fecha1", values_to = "Solicitudes")
+  pivot_longer(-c(`País/Región`, Transporte, geo_type, alternative_name), names_to = "Fecha1", values_to = "Solicitudes")
 
 trackapple<-trackapple%>% separate(Fecha1, 
                                    into = c("X", "Fecha"), 
@@ -36,4 +36,30 @@ trackapple1%>%
   #  theme(plot.title = element_text(color="black", size=18, face="bold.italic"))+
   scale_x_date(date_labels="%b %d",date_breaks  ="1 week")+
   scale_colour_brewer(palette = "Set1")+
+  theme_clean()
+
+
+###Googlemaps.
+##https://www.google.com/covid19/mobility/
+trackgoogle<-read.csv("/Users/guberney/Research/Covid/Global_Mobility_Report.csv")
+str(trackgoogle)
+trackgoogle<-as_tibble(trackgoogle)
+
+trackgoogle<-trackgoogle%>%
+            mutate(date = ymd(date))%>%
+            filter (country_region_code %in% 'CO' )
+trackgoogle$retail_and_recreation_percent_change_from_baseline<-as.numeric(trackgoogle$retail_and_recreation_percent_change_from_baseline)
+
+trackgoogle %>%
+  ggplot(aes(date, retail_and_recreation_percent_change_from_baseline, colour =country_region_code)) +
+  geom_line(size = 1, show.legend = FALSE)+
+  labs(title= "Cambio en visitas y tiempo de estadía de ciudadanos COLOMBIANOS en lugares como:",
+       subtitle = "Restaurantes,cafes, centros comerciales, parques temáticos, museos, bibliotecas, cines.\nDatos de google maps.",
+       x= "Fecha", y= "Porcentaje de cambio con respecto a la línea base", 
+       caption = "Fuente: Datos tomados de https://www.google.com/covid19/mobility/\n Gráfico= @guberney")+
+  geom_vline(xintercept=as.numeric(as.Date("2020-03-25")),color="blue", linetype="dashed", size=2 )+
+ # scale_y_continuous(labels=scales::percent)+
+  annotate ("text", label = "Aislamiento obligatorio\n Colombia", x = as.Date("2020-03-23"), y = 0.50, size = 6, colour = "blue")+
+  scale_x_date(date_labels="%b %d",date_breaks  ="1 week")+
+ # scale_colour_brewer(palette = "Set1")+
   theme_clean()
