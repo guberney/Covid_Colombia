@@ -2,7 +2,7 @@
 
 #Reports are published daily and reflect requests for directions in Apple Maps.
 #https://www.apple.com/covid19/mobility
-trackapple<-read.csv("/Users/guberney/Research/Covid/applemobilitytrends-2020-05-12.csv")
+trackapple<-read.csv("/Users/guberney/Research/Covid/applemobilitytrends-2020-05-17.csv")
 str(trackapple)
 trackapple<-trackapple%>% rename(`País/Región` = `region`, `Transporte`=transportation_type)%>%
   pivot_longer(-c(`País/Región`, Transporte, geo_type, alternative_name), names_to = "Fecha1", values_to = "Solicitudes")
@@ -17,8 +17,9 @@ trackapple<-trackapple%>%mutate(Transporte = fct_recode(Transporte,
                                                         Caminando="walking"))%>%
   mutate(CambioPorcentual = ((Solicitudes-100)/100))
 
-trackapple1<-trackapple%>%filter(`País/Región`=='Colombia' | `País/Región`=='Argentina'  | `País/Región`=='Chile'  | `País/Región`=='Mexico' 
-                                 | `País/Región`=='Brazil'| `País/Región`=='Peru'| `País/Región`=='Ecuador'| `País/Región`=='United States')
+#selecciona los países que prefieras.
+trackapple1<-trackapple%>%filter(`País/Región`=='Colombia' | `País/Región`=='India'  | `País/Región`=='Spain'  | `País/Región`=='Italy' 
+                                 | `País/Región`=='China'| `País/Región`=='France'| `País/Región`=='Ecuador'| `País/Región`=='United States')
 
 trackapple1%>%
   # filter(`País/Región` == "Colombia")%>%
@@ -26,40 +27,43 @@ trackapple1%>%
   ggplot(aes(Fecha, CambioPorcentual, colour=`País/Región`)) +
   geom_line(size = 1)+
   labs(title= "Cambio de rutinas de ciudadanos en requerir direcciones en Apple Maps (Conduciendo),\n desde Enero 13 de 2020.",
-       subtitle = "Países de la región",x= "Fecha", y= "Porcentaje de solicitudes en Apple Maps", 
+       subtitle = "Algunos países de la región",x= "Fecha", y= "Porcentaje de solicitudes en Apple Maps", 
        caption = "Fuente: https://www.apple.com/covid19/mobility\n Gráfico= @guberney")+
   geom_vline(xintercept=as.numeric(as.Date("2020-03-25")),color="blue", linetype="dashed", size=2 )+
   geom_hline(yintercept=0,color="black", linetype="solid", size=1)+
   scale_y_continuous(labels=scales::percent)+
-  annotate ("text", label = "Aislamiento obligatorio\n Colombia", x = as.Date("2020-03-23"), y = 0.50, size = 6, colour = "blue")+
-  annotate ("text", label = "Línea base", x = as.Date("2020-04-11"), y = 0.05, size = 4, colour = "black")+
+  ggplot2::annotate("text", label = "Aislamiento obligatorio\n Colombia", x = as.Date("2020-03-23"), y = 0.50, size = 6, colour = "blue")+
+  ggplot2::annotate ("text", label = "Línea base", x = as.Date("2020-05-04"), y = 0.05, size = 4, colour = "black")+
   #  theme(plot.title = element_text(color="black", size=18, face="bold.italic"))+
   scale_x_date(date_labels="%b %d",date_breaks  ="1 week")+
   scale_colour_brewer(palette = "Set1")+
   theme_clean()
 
-
-###Googlemaps.
+###Data google movility, 
 ##https://www.google.com/covid19/mobility/
 trackgoogle<-read.csv("/Users/guberney/Research/Covid/Global_Mobility_Report.csv")
 str(trackgoogle)
-trackgoogle<-as_tibble(trackgoogle)
+trackgoogle<-as.tibble(trackgoogle)
+trackgoogle<-trackgoogle %>%
+  mutate(date = ymd(date))
+#select Colombia
+trackgoogleCol<-trackgoogle%>%filter(`country_region_code` %in% 'CO') 
+trackgoogleCol<-trackgoogleCol %>%
+                mutate(date = ymd(date))  
 
-trackgoogle<-trackgoogle%>%
-            mutate(date = ymd(date))%>%
-            filter (country_region_code %in% 'CO' )
-trackgoogle$retail_and_recreation_percent_change_from_baseline<-as.numeric(trackgoogle$retail_and_recreation_percent_change_from_baseline)
+#puedes mirar otros paíes. 
+trackapple2<-trackgoogle%>%filter( `country_region`=='Italy' | `country_region`=='Germany'
+                                 | `country_region`=='France'| `country_region`=='Colombia'| `country_region`=='Brazil')
 
-trackgoogle %>%
-  ggplot(aes(date, retail_and_recreation_percent_change_from_baseline, colour =country_region_code)) +
-  geom_line(size = 1, show.legend = FALSE)+
-  labs(title= "Cambio en visitas y tiempo de estadía de ciudadanos COLOMBIANOS en lugares como:",
-       subtitle = "Restaurantes,cafes, centros comerciales, parques temáticos, museos, bibliotecas, cines.\nDatos de google maps.",
-       x= "Fecha", y= "Porcentaje de cambio con respecto a la línea base", 
-       caption = "Fuente: Datos tomados de https://www.google.com/covid19/mobility/\n Gráfico= @guberney")+
+trackapple2%>%
+ggplot(aes(date, retail_and_recreation_percent_change_from_baseline, colour=`country_region`)) +
+  geom_line(size = 1)+
+  labs(title= "Cambios en movilidad de acuerdo a línea base promedio (googlemaps) ",
+       subtitle = "Visitas y tiempo en los lugares como cines, centros comerciales, restaurantes",x= "Fecha", y= "Cambio porcentual en movildad", 
+       caption = "Fuente: https://www.google.com/covid19/mobility/\n Gráfico= @guberney")+
   geom_vline(xintercept=as.numeric(as.Date("2020-03-25")),color="blue", linetype="dashed", size=2 )+
  # scale_y_continuous(labels=scales::percent)+
-  annotate ("text", label = "Aislamiento obligatorio\n Colombia", x = as.Date("2020-03-23"), y = 0.50, size = 6, colour = "blue")+
+  ggplot2::annotate("text", label = "Aislamiento obligatorio\n Colombia", x = as.Date("2020-03-23"), y = 25, size = 6, colour = "blue")+
   scale_x_date(date_labels="%b %d",date_breaks  ="1 week")+
- # scale_colour_brewer(palette = "Set1")+
+  scale_colour_brewer(palette = "Set1")+
   theme_clean()
