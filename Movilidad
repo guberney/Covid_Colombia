@@ -1,5 +1,9 @@
 ###Reports are published daily and reflect requests for directions in Apple Maps and Google maps
 
+library(tidyverse)
+library(lubricate)
+library(ggthemes)
+
 #Reports are published daily and reflect requests for directions in Apple Maps.
 #https://www.apple.com/covid19/mobility
 trackapple<-read.csv("/Users/guberney/Research/Covid/applemobilitytrends-2020-05-17.csv")
