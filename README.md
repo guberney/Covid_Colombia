@@ -8,6 +8,8 @@ Plataforma de datos abiertos de Colombia: https://www.datos.gov.co/Salud-y-Prote
 
 Archivos históricos de los reportes de Colombia. https://www.ins.gov.co/Paginas/Boletines-casos-COVID-19-Colombia.aspx
 
+Boletines históricos https://www.ins.gov.co/Paginas/Boletines-casos-COVID-19-Colombia.aspx
+
 World Health Organization (WHO): https://www.who.int/
 
 Investigaciones sobre covid-19: https://www.who.int/emergencies/diseases/novel-coronavirus-2019/global-research-on-novel-coronavirus-2019-ncov
